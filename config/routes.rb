@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'users/show'
   resources :events
+  resources :users
   root 'events#index'
-  resources :enrollments, only: [:create, :destroy]
+  resources :enrollments, only: [:create, :destroy, :update]
 
 
 end

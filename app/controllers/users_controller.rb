@@ -10,7 +10,6 @@ class UsersController < ApplicationController
     @user.save
     session[:user_id] = @user.id
     flash.notice = "User #{@user.email} successfully created! Thank you for signing up!"
-    redirect_to user_path
     redirect_to user_path(@user)
   end
 
@@ -21,6 +20,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :user_id)
+    params.require(:user).permit(:email, :password)
   end
 end
