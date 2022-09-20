@@ -1,0 +1,78 @@
+<div class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-5">
+        <div class="box">
+          <h2 class="title is-2 is-spaced has-text-centered mb-6"><%= @event.title %></h2>
+
+          <div class="columns is-mobile is-centered">
+            <div class="column">
+              <p><small>Hosted by</small></p>
+              <h4 class="subtitle is-4"><%= @event.creator.email %></h4>
+            </div>
+
+            <%# <div class="column"></div> %>
+
+            <div class="column">
+              <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button is-large is-fullwidth" aria-haspopup="true" aria-controls="dropdown-menu3">
+                    <span>Attendies: <%= @event.attendees.count %></span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+                  <div class="dropdown-content">
+                    <ul>
+                      <% if @event.attendees.any? %>
+                        <div class="dropdown-item">
+                          <% @event.attendees.each do |attendee| %>
+                            <li><p><%= attendee.email %></p></li>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="has-text-justified"><%= @event.description %></p><br/>
+
+          <div class="columns is-mobile is-centered">
+            <div class="column">
+              <div class="card">
+                <div class="card-header">
+                  <p class="card-header-title is-centered"><%= @event.location %></p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <div class="card-header">
+                  <p class="card-header-title is-centered"><%= @event.date %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br/>
+
+
+          <% if @event.creator == current_user %>
+            <%= button_to "Invite", root_path,  class: "button is-info is-large is-fullwidth" %>
+          <% elsif @event.attendees.exists?(id: current_user.id) %>
+            <%= button_to "Cancel enrollment", enrollment_path(event_id: @event.id), method: :delete, class: "button is-danger is-large is-fullwidth" %>
+          <% else %>
+            <%= button_to "Enroll", enrollments_path(event_id: @event.id, user_id: current_user.id), class: "button is-primary is-large is-fullwidth" %>
+          <% end %>
+
+          <br/>
+
+          <%= link_to 'Back', root_path, class: "button is-fullwidth" %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
