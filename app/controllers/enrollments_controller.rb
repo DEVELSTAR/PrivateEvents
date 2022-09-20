@@ -15,7 +15,9 @@ class EnrollmentsController < ApplicationController
   def destroy
     event = Event.find(params[:event_id])
     if current_user == event.creator
-      Enrollment.find(params[:id]).destroy
+      enrollment = Enrollment.find(params[:id])
+      enrollment.user_id = nil
+      enrollment.save
       flash[:notice] = "The invitation is cancelled!"
     else
       Enrollment.find(params[:id]).user_id = nil
