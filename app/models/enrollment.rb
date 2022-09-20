@@ -1,5 +1,5 @@
 class Enrollment < ApplicationRecord
-  belongs_to :user, class_name: "User", optional: true
-  belongs_to :invitee, class_name: "User"  
+  enum status: { invited: 0, accepted: 1 }
+  belongs_to :user
   belongs_to :event
 end
